@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Authentic Reader Cleaner
 // @namespace        http://blog.ameba.jp
-// @version        0.4
+// @version        0.5
 // @description        Authentic Reader の履歴データから退会者を排除する
 // @author        Ameba Blog User
 // @match        https://ameblo.jp/*
@@ -25,7 +25,7 @@ setTimeout(()=>{
 
 
 function id_check(){
-    let amebaId=document.querySelector('._w6MHwCAy');
+    let amebaId=document.querySelector('._2j4IoOdR');
     if(amebaId){
         UserID=amebaId.textContent; }
 
