@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Authentic Reader Cleaner
 // @namespace        http://blog.ameba.jp
-// @version        0.6
+// @version        0.7
 // @description        Authentic Reader の履歴データから退会者を排除する
 // @author        Ameba Blog User
 // @match        https://ameblo.jp/*
@@ -120,7 +120,7 @@ function disp_panel(){
         '#panel_ARC .ARC2 { margin: 12px 0; height: calc(100vh - 300px); overflow-y: scroll; '+
         'font: normal 16px Meiryo; color: #000; background: #fff; } '+
         '#panel_ARC .ARC2 li { padding: 5px 12px 3px; border-bottom: 1px solid #ccc; } '+
-        '#panel_ARC .dn { display: inline-block; width: 30px; font-size: 12px; text-align: left; } '+
+        '#panel_ARC .dn { display: inline-block; min-width: 30px; font-size: 12px; text-align: left; } '+
         '#panel_ARC .d0 { display: inline-block; width: 300px; } '+
         '#panel_ARC .d1 { display: inline-block; width: 150px; } '+
         '#panel_ARC .d2 { display: inline-block; width: 150px; } '+
@@ -210,7 +210,7 @@ function disp_list(){
         for(let k=0; k<readers.length; k++){
             li+=
                 '<li>'+
-                '<span class="dn">'+ k +'</span>'+
+                '<span class="dn">'+ (k/1+1) +'</span>'+
                 '<span class="d0">'+ readers[k][0] +'</span>'+
                 '<span class="d1">'+ readers[k][1] +'</span>';
             if(!readers[k][3]){
@@ -243,8 +243,10 @@ function unsubscribe(){
             if(check_li()){
                 let panel_li=document.querySelectorAll('#panel_ARC li');
 
+                let count=0; // チェック数のカウント
                 for(let i=0; i<panel_li.length; i++){
                     let id=panel_li[i].querySelector('.d0').textContent;
+                    count+=1;
 
                     if(check_id(id)){
                         panel_li[i].style.background='#2196f395';
@@ -253,7 +255,10 @@ function unsubscribe(){
                                 readers[k][2]='3'; // 退会者のフラグ
                                 break; }}}}
 
-                write_session(); }} // 退会者のフラグのストレージ保存
+                write_session(); // 退会者のフラグのストレージ保存
+                alert('退会者を調査しました　調査した件数: '+ count +' 件');
+
+            }}
 
     } // if(check)
 
